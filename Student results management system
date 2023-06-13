@@ -1,1 +1,595 @@
+#include <iostream>
 
+#include <iomanip>
+
+#include <cctype> // for toupper function
+
+using namespace std;
+
+struct Student {
+
+    string firstName;
+
+    string lastName;
+
+    long long unsigned regNo;
+
+    float marks[5];
+
+    char grade[5];
+
+    float averageMarks;
+
+    string status;
+
+};
+
+char getGrade(float marks) {
+
+    if (marks >= 81 && marks <= 100) {
+
+        return 'A';
+
+    } else if (marks >= 61 && marks <= 80) {
+
+        return 'B';
+
+    } else if (marks >= 41 && marks <= 60) {
+
+        return 'C';
+
+    } else if (marks >= 21 && marks <= 40) {
+
+        return 'D';
+
+    } else {
+
+        return 'F';
+
+    }
+
+}
+
+void viewStudents(Student students[], int numStudents) {
+
+    for (int i = 0; i < numStudents; i++) {
+
+        cout << "Student " << i + 1 << ": " << students[i].firstName << " " << students[i].lastName << endl;
+
+    }
+
+}
+
+void viewStudentInfo(Student students[], int numStudents) {
+
+    long long unsigned regNo;
+
+    cout << "Enter Registration Number: ";
+
+    cin >> regNo;
+
+    bool found = false;
+
+    for (int i = 0; i < numStudents; i++) {
+
+        if (students[i].regNo == regNo) {
+
+            cout << "First Name: " << students[i].firstName << endl;
+
+            cout << "Last Name: " << students[i].lastName << endl;
+
+            cout << "Registration Number: " << students[i].regNo << endl;
+
+            for (int j = 0; j < 5; j++) {
+
+                cout << "Subject " << j + 1 << ": " << students[i].marks[j] << endl;
+
+                cout << "Grade " << j + 1 << ": " << students[i].grade[j] << endl;
+
+            }
+
+            cout << "Average Marks: " << students[i].averageMarks << endl;
+
+            cout << "Status: " << students[i].status << endl;
+
+            found = true;
+
+            break;
+
+        }
+
+    }
+
+    if (!found) {
+
+        cout << "Error! Invalid Registration Number." << endl;
+
+    }
+
+}
+
+void updateStudentInfo(Student students[], int numStudents) {
+
+    long long unsigned regNo;
+
+    cout << "Enter Registration Number: ";
+
+    cin >> regNo;
+
+    bool found = false;
+
+    for (int i = 0; i < numStudents; i++) {
+
+        if (students[i].regNo == regNo) {
+
+            cout << "Enter new First Name: ";
+
+            cin >> students[i].firstName;
+
+            cout << "Enter new Last Name: ";
+
+            cin >> students[i].lastName;
+
+            cout << "Enter new Registration Number: ";
+
+            cin >> students[i].regNo;
+
+            for (int j = 0; j < 5; j++) {
+
+                cout << "Enter new marks for subject " << j + 1 << ": ";
+
+                cin >> students[i].marks[j];
+
+                students[i].grade[j] = getGrade(students[i].marks[j]);
+
+            }
+
+            int totalMarks = 0;
+
+            for (int j = 0; j < 5; j++) {
+
+                totalMarks += students[i].marks[j];
+
+            }
+
+            students[i].averageMarks = totalMarks / 5.0;
+
+            if (students[i].averageMarks >= 50) {
+
+                students[i].status = "Pass";
+
+            } else {
+
+                students[i].status = "Fail";
+
+            }
+
+            found = true;
+
+            break;
+
+        }
+
+    }
+
+    if (!found) {
+
+        cout << "Error! Invalid Registration Number." << endl;
+
+    }
+
+}
+
+void addStudentResult(Student students[], int numStudents) {
+
+    for (int i = 3; i <= 100; i++) {
+
+        cout << "Enter details for student"  << i + 1 << endl;
+
+        cout << "First Name: ";
+
+            cin >> students[i].firstName;
+
+            cout << "Last Name: ";
+
+            cin >> students[i].lastName;
+
+            cout << "Registration Number: ";
+
+            cin >> students[i].regNo;
+
+        for (int j = 0; j < 5; j++) {
+
+            cout << "Enter marks for subject " << j + 1 << ": ";
+
+            cin >> students[i].marks[j];
+
+            students[i].grade[j] = getGrade(students[i].marks[j]);
+
+        }
+
+        int totalMarks = 0;
+
+        for (int j = 0; j < 5; j++) {
+
+            totalMarks += students[i].marks[j];
+
+        }
+
+        students[i].averageMarks = totalMarks / 5.0;
+
+        if (students[i].averageMarks >= 50) {
+
+            students[i].status = "Pass";
+
+        } else {
+
+            students[i].status = "Fail";
+
+        }
+
+        cout << endl;
+
+    }
+
+}
+
+void viewStudentsResult(Student students[], int numStudents) {
+
+     cout << "Displaying Information for all students:\n";
+
+  float totalAverageMarks = 0;
+
+  cout << setw(10) << "First Name" << setw(10) << "Last Name" << setw(20) << "Registration Number" << setw(10) << "Subject 1" << setw(10) << "Grade 1" << setw(10) << "Subject 2" << setw(10) << "Grade 2" << setw(10) << "Subject 3" << setw(10) << "Grade 3" << setw(10) << "Subject 4" << setw(10) << "Grade 4" << setw(10) << "Subject 5" << setw(10) << "Grade 5" << setw(15) << "Average Marks" << setw(10) << "Status" << endl;
+
+  for (int i = 0; i < 3; i++) {
+
+    cout << setw(10) << students[i].firstName << setw(10) << students[i].lastName << setw(20) << students[i].regNo;
+
+    for (int j = 0; j < 5; j++) {
+
+      cout << setw(10) << students[i].marks[j] << setw(10) << students[i].grade[j];
+
+    }
+
+    cout << setw(15) << students[i].averageMarks << setw(10) << students[i].status << endl;
+
+    totalAverageMarks += students[i].averageMarks;
+
+  }
+
+}
+
+void viewStudentResult(Student students[], int numStudents) {
+
+    long long unsigned regNo;
+
+    cout << "Enter Registration Number: ";
+
+    cin >> regNo;
+
+    bool found = false;
+
+    for (int i = 0; i < numStudents; i++) {
+
+        if (students[i].regNo == regNo) {
+
+            cout << "Student Result:\n";
+
+            cout << "Average Marks: " << students[i].averageMarks << endl;
+
+            cout << "Status: " << students[i].status << endl;
+
+            cout << endl;
+
+            found = true;
+
+            break;
+
+        }
+
+    }
+
+    if (!found) {
+
+        cout << "Error! Invalid Registration Number." << endl;
+
+    }
+
+}
+
+void updateStudentResult(Student students[], int numStudents) {
+
+    long long unsigned regNo;
+
+    cout << "Enter Registration Number: ";
+
+    cin >> regNo;
+
+    bool found = false;
+
+    for (int i = 0; i < numStudents; i++) {
+
+        if (students[i].regNo == regNo) {
+
+            for (int j = 0; j < 5; j++) {
+
+                cout << "Enter new marks for subject " << j + 1 << ": ";
+
+                cin >> students[i].marks[j];
+
+                students[i].grade[j] = getGrade(students[i].marks[j]);
+
+            }
+
+            int totalMarks = 0;
+
+            for (int j = 0; j < 5; j++) {
+
+                totalMarks += students[i].marks[j];
+
+            }
+
+            students[i].averageMarks = totalMarks / 5.0;
+
+            if (students[i].averageMarks >= 50) {
+
+                students[i].status = "Pass";
+
+            } else {
+
+                students[i].status = "Fail";
+
+            }
+
+            found = true;
+
+            break;
+
+        }
+
+    }
+
+    if (!found) {
+
+        cout << "Error! Invalid Registration Number." << endl;
+
+    }
+
+}
+
+int main() { 
+
+    const int numStudents = 3;
+
+    Student students[numStudents];
+
+    char choice;
+
+    do {
+
+        for (int i = 0; i < numStudents; i++) {
+
+            cout << "Enter details for student " << i + 1 << endl;
+
+            cout << "First Name: ";
+
+            cin >> students[i].firstName;
+
+            cout << "Last Name: ";
+
+            cin >> students[i].lastName;
+
+            cout << "Registration Number: ";
+
+            cin >> students[i].regNo;
+
+            for (int j = 0; j < 5; j++) {
+
+                cout << "Enter marks for subject " << j + 1 << ": ";
+
+                cin >> students[i].marks[j];
+
+                students[i].grade[j] = getGrade(students[i].marks[j]);
+
+            }
+
+            int totalMarks = 0;
+
+            for (int j = 0; j < 5; j++) {
+
+                totalMarks += students[i].marks[j];
+
+            }
+
+            students[i].averageMarks = totalMarks / 5.0;
+
+            if (students[i].averageMarks >= 50) {
+
+                students[i].status = "Pass";
+
+            } else {
+
+                students[i].status = "Fail";
+
+            }
+
+            cout << "Student details entered successfully." << endl;
+
+            cout << endl;
+
+            cout << "Press Enter to continue...";
+
+            cin.ignore(); // ignore any previous input
+
+            cin.get(); // wait for user to press Enter
+
+            cout << endl;
+
+           
+
+        }
+
+       
+
+        cout << "Displaying Information for all students:\n";
+
+        float totalAverageMarks = 0;
+
+        for (int i = 0; i < numStudents; i++) {
+
+            cout << "\nStudent " << i + 1 << ":\n";
+
+            cout << "First Name: " << students[i].firstName << endl;
+
+            cout << "Last Name: " << students[i].lastName << endl;
+
+            cout << "Registration Number: " << students[i].regNo << endl;
+
+            for (int j = 0; j < 5; j++) {
+
+                cout << "Subject " << j + 1 << ": " << students[i].marks[j] << endl;
+
+                cout << "Grade " << j + 1 << ": " << students[i].grade[j] << endl;
+
+            }
+
+            cout << endl;
+
+            cout << "Average Marks: " << students[i].averageMarks << endl;
+
+            cout << "Status: " << students[i].status << endl;
+
+            totalAverageMarks += students[i].averageMarks;
+
+        }
+
+        cout << endl;
+
+        cout << "Total Average Marks: " << totalAverageMarks / 3 << endl;
+
+        cout << endl;
+
+        
+
+        bool valid_input = false;
+
+        while (!valid_input) {
+
+            cout << "Do you wish to continue? (Y/N): ";
+
+            cin >> choice;
+
+            if (choice == 'Y') {
+
+                valid_input = true;
+
+            } else if (choice == 'N') {
+
+                valid_input = true;
+
+            } else {
+
+                cout << "Error! Invalid input." << endl;
+
+            }
+
+        }
+
+    } while (toupper(choice) == 'N');
+
+    int option;
+
+    do {
+
+    	cout << "Student details entered successfully." << endl;
+
+        cout << endl;
+
+        cout << "***** MENU *****" << endl;
+
+        cout << "Choose an option:\n";
+
+        cout << "1. View the students\n";
+
+        cout << "2. View student info\n";
+
+        cout << "3. Update student info\n";
+
+        cout << "4. Add student result\n";
+
+        cout << "5. View students result\n";
+
+        cout << "6. View student result\n";
+
+        cout << "7. Update student results\n";
+
+        cout << "8. Exit\n";
+
+        cout << "Enter number of option you want: ";
+
+        cin >> option;
+
+        cout << endl;
+
+        switch (option) {
+
+            case 1:
+
+                viewStudents(students, numStudents);
+
+                break;
+
+            case 2:
+
+                viewStudentInfo(students, numStudents);
+
+                break;
+
+            case 3:
+
+                updateStudentInfo(students, numStudents);
+
+                break;
+
+            case 4:
+
+                addStudentResult(students, numStudents);
+
+                break;
+
+            case 5:
+
+                viewStudentsResult(students, numStudents);
+
+                break;
+
+            case 6:
+
+                viewStudentResult(students, numStudents);
+
+                break;
+
+            case 7:
+
+                updateStudentResult(students, numStudents);
+
+                break;
+
+            case 8:
+
+                cout << "Exiting program...\n";
+
+                break;
+
+            default:
+
+                cout << "Invalid option. Please try again.\n";
+
+        }
+
+    } while (option != 8);
+
+    return 0;
+
+}
